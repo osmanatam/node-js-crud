@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <%- include('./includes/head') %>
+</head>
+<body>
+
+<%- include('./includes/nav') %>
+
+
+<section>
+
+    <a href="/admin/add-post"><button>Yazı Ekle</button></a>
+
+    <h1>Yazılar</h1>
+    <ul>
+        <% blogs.forEach(blog=>{ %>
+        <li><a href="/blog/<%=blog._id%>"><%=blog.title%></a></li>
+        <p><%=blog.short%></p>
+        <button type="button" class="isDelete" data-url="/admin/destroy/<%=blog._id%>">Sil</button>
+        <% }) %>
+    </ul>
+</section>
+
+<script>
+    $(".isDelete").click(function (){
+        var data_url = $(this).data("url");
+        $.ajax({
+            type : "DELETE",
+            url : data_url,
+            data : {},
+            success : function (res){
+                window.location.href=res.link;
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
